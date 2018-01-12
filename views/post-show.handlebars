@@ -1,31 +1,16 @@
 
 <!-- post-show -->
-<script rel="script" src="/js/posts.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX2VYblE-o&callback=initMap"
-async defer></script>
-    <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: 37.7867, lng: -122.431297},
-          zoom: 10
-        });
-      }
-    </script>
-<script src='markerclusterer.js'</script>
-<script src='js-map.js'</script>
-
 <div id="post-content">
     <a href="{{post.url}}" class="lead">{{post.title}}</a>
-      <div id ='map' style="height: 500px; width: 500px;">
 
-        <div id="post-data">
+    <div id="post-data">
+        <div id ='map' style="height: 200px; width: 200px;"></div>
         <p class="post-location">Location: {{post.location}}</p>
         <p class="post-date">Date: {{post.createdAt}}</p>
         <p class="post-author">Author: {{post.author.username}}</p>
-        </div>
-    
+    </div>
 </div>
+
 
 
 <form action="/posts/{{post._id}}/comments" method="post">
@@ -54,3 +39,18 @@ async defer></script>
         </div>
     </div>
 {{/each}}
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX2VYblE-o&callback=initMap"
+async defer></script>
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
+    </script>
+<!-- <script src='markerclusterer.js'></script> -->
+<!-- <script src='js-map.js'></script> -->
+<script rel="script" src="/js/posts.js"></script>

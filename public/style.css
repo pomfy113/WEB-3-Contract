@@ -110,13 +110,13 @@
 /* Posts */
 #post-content{
     position: relative;
-    padding-bottom: 50px;
+    padding-bottom: 250px;
 
 }
 #post-data{
     position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: 50px;
     font-size: 10px;
 }
 #post-data *{
