@@ -7,34 +7,26 @@
 <title>Location Overflow</title>
 </head>
 <body class="{{bodytype}}">
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Location Overflow</a>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active"><a class="nav-link" href="/">Home</a></li>
-        <li><a class="nav-link" href="/posts/new">New Post</a></li>
-        <li><a class="nav-link" href="/view-all">View Posts</a></li>
-
-
+<div class="stick-navbar">
+    <ul id="navigation">
+        <!--  Nav  -->
+            <a id="logo" href="/"><li><h2>&#9783;</h1></li></a>
+            <a href="/"><li>Questions</li></a>
+            <a href="/"><li>Users</li></a>
+            <li>
+                <form class="search-set form-inline" action="/location">
+                    <input id="search-button" class="form-control mr-sm-2 searchbar" type="search"  name="q" placeholder="Search" aria-label="Search">
+                    <!-- <input type="submit">Search</input> -->
+                    <button id="search-submit" type="submit">&#128269;</button>
+                </form>
+            </li>
+        <!-- Auth -->
+            <a href="#"><li class="logged-in"><em>{{user.username}}</em></li></a>
+            <a href="/logout"><li class="logged-in">Log-out</li></a>
+            <a href="/login"><li class="logged-out">Log-in</li></a>
+            <a href="/register"><li class="logged-out">Register</li></a>
     </ul>
-    <span class="navbar-text logged-in" style="padding:0px 10px">Logged in:<br>{{user.username}}</span>
-
-    <form class="form-inline" style="padding:0px 10px;" action="/location">
-      <input class="form-control mr-sm-2" type="search"  name="q" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-
-      <ul class="navbar-nav navbar-right">
-          <li><a class="nav-link nav-link logged-out" href="/login">Login</a></li>
-          <li><a class="nav-link nav-link logged-out" href="/register">Sign Up</a></li>
-          <li><a class="nav-item nav-link logged-in" href="/logout">Log-out</a></li>
-      </ul>
-
-
-  </div>
-</nav>
+</div>
 
 <br>
 <div class="container">

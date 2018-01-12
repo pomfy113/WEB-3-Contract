@@ -47,6 +47,7 @@ const utils = require('./controllers/utils.js')
 
 require('./controllers/auth.js')(app);
 require('./controllers/posts.js')(app);
+require('./controllers/answers.js')(app);
 
 
 

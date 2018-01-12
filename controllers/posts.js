@@ -1,11 +1,12 @@
 const Post = require('../models/post')
 const User = require('../models/user')
+const Answer = require('../models/answer')
 const utils = require('./utils')
 
 module.exports = (app) => {
     app.get('/', (req, res) => {
         let bodytype = utils.checklog("view-all", req.user)
-        Post.find().populate('author').then((post) => {
+        Post.find().then((post) => {
             res.render('home', {post, bodytype, user: req.user})
           }).catch((err) => {
             console.log(err.message)
@@ -16,8 +17,7 @@ module.exports = (app) => {
     app.get('/location', (req, res) => {
         let bodytype = utils.checklog("loc", req.user)
         Post.find({'location': req.query.q}).populate('author').then((post) => {
-            console.log(post)
-            res.render('all-posts', {post, bodytype, user: req.user})
+            res.render('home', {post, bodytype, user: req.user})
           }).catch((err) => {
             console.log(err.message)
           })
@@ -53,13 +53,14 @@ module.exports = (app) => {
 
    // Show game details
   app.get('/posts/:id', function (req, res) {
+      let bodytype = utils.checklog("post", req.user)
 
       var currentUser = req.user;
       var currentAuthor = Post.author;
 
      // LOOK UP THE POST
      Post.findById(req.params.id).populate('author').then((post) => {
-         res.render('post-show', { post, currentUser })
+         res.render('post-show', { bodytype, post, user: req.user, currentUser })
        }).catch((err) => {
          console.log(err.message)
        })

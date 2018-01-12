@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
     createdAt         : { type: Date }
     , updatedAt       : { type: Date }
-    , posts : [{ type: Schema.Types.ObjectId, ref: 'Post' }]
+    , posts           : [{ type: Schema.Types.ObjectId, ref: 'Post' }]
     , password        : { type: String, select: false }
     , username        : { type: String, required: true }
 });

@@ -1,14 +1,60 @@
 <style>
 .in-a-box{
-    border: 1px solid grey;
-    padding: 20px;
-    border-radius: 10px;
+    border-top: 1px solid grey;
+
+    padding: 10px;
+
 }
+#home-nav{
+    display: inline-flex;
+    list-style: none;
+}
+    #home-header{
+        font-size: 18px;
+        font-weight: 600;
+    }
+    #home-tabs{
+        display: inline-flex;
+        list-style: none;
+        margin: 0px;
+    }
+
+        #home-tabs a{
+            text-decoration: none;
+            color: black;
+        }
+
+        #home-tabs li{
+            margin: 0px 15px;
+            padding: 0px;
+        }
+
+        .tab{
+            padding: 3px 1px 0px 1px;
+        }
+
+        .active{
+            padding: 0px;
+            border-top: 3px solid green;
+            border-left: 1px solid grey;
+            border-right: 1px solid grey;
+            background-color: white;
+        }
+
+
 </style>
-Recent Posts
+<div id="home-nav">
+    <h1 id="home-header">Mockup Header</h1>
+
+    <ul id="home-tabs">
+        <a href="#" class="tab active"><li>Mockup</li></a>
+        <a href="#" class="tab"><li>List</li></a>
+    </ul>
+</div>
 {{#each post}}
     <div class="in-a-box">
     <a href="/posts/{{this.id}}"><h2>{{this.title}}</h2></a>
     <p><a href="location?q={{this.location}}">Location: {{this.location}}</a></p>
+    <p>Author: {{this.author.username}}</p>
 </div>
 {{/each}}
