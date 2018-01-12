@@ -7,10 +7,19 @@ const PostSchema = new Schema({
 
   title:          { type: String, required: true },
   location:       { type: String, required: true },
-  // comments:       [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+  answers:        [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
   author :        { type: Schema.Types.ObjectId, ref: 'User', required: true }
 })
 
+// Autopopulation
+const autoPopulatePosts = function(next) {
+  this.populate('answers').populate('author');
+  next();
+};
+
+PostSchema.
+  pre('find', autoPopulatePosts).
+  pre('findOne', autoPopulatePosts);
 
 PostSchema.pre('save', function(next){
   // SET createdAt AND updatedAt
