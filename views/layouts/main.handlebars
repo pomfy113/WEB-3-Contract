@@ -24,12 +24,19 @@
             <a href="#"><li class="logged-in"><em>{{user.username}}</em></li></a>
             <a href="/logout"><li class="logged-in">Log-out</li></a>
             <a href="/login"><li class="logged-out">Log-in</li></a>
-            <a href="/register"><li class="logged-out">Register</li></a>
+            <a href="/register"><li class="register-user">Register</li></a>
     </ul>
 </div>
 
 <br>
 <div class="container">
-{{{body}}}
+    <div class="container-fluid">
+      {{{body}}}
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js">
+    </script>
+    <script src="/js/auth.js"></script>
 </body>
 </div>
