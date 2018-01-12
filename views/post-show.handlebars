@@ -7,20 +7,26 @@
     <p>Location: {{post.location}}</p>
     <p>Date: {{post.createdAt}}</p>
   </div>
+  <div id ='map' style="height: 500px; width: 500px;">
+  </div>
 
-  <!-- <form action="/posts/{{post._id}}/comments" method="post">
-    <textarea class='form-control' name="content" placeholder="Comment"></textarea>
-    <div class="text-right">
-      <button type="submit" class="btn btn-primary">Save</button>
-    </div>
-  </form>
-
-  <h2>Comments</h2>
 
   {{#each post.comments}}
     <li class="list-group-item">
       <p> > {{this.content}}</p>
     </li>
   {{/each}} -->
-
 </div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX2VYblE-o&callback=initMap"
+async defer></script>
+    <script>
+      var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
+    </script>
+<script src='markerclusterer.js'</script>
+<script src='js-map.js'</script>

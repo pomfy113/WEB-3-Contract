@@ -7,6 +7,8 @@ const PostSchema = new Schema({
 
   title:          { type: String, required: true },
   location:       { type: String, required: true },
+  // longitude: { type: DataTypes.FLOAT },
+  // latitude: { type: DataTypes.FLOAT },
   // comments:       [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   author :        { type: Schema.Types.ObjectId, ref: 'User', required: true }
 })
