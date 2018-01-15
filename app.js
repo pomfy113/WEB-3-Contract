@@ -1,6 +1,7 @@
 const express = require('express')
 const exphbs  = require('express-handlebars');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override')
 // Used for authentication
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken');
@@ -17,6 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'))
 // Cookie Parser
 app.use(cookieParser());
+app.use(methodOverride('_method'))
 
 
 // View Engine - Handlebars

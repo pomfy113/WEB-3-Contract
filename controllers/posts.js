@@ -56,14 +56,41 @@ module.exports = (app) => {
       let bodytype = utils.checklog("post", req.user)
 
       var currentUser = req.user;
-      var currentAuthor = Post.author;
+      // var currentAuthor = Post.author;
 
      // LOOK UP THE POST
      Post.findById(req.params.id).populate('author').then((post) => {
-         res.render('post-show', { bodytype, post, user: req.user, currentUser })
+       let currentClass = ""
+         if (post.author && currentUser) {
+             var currentAuthor = post.author.username;
+             currentClass = currentUser.username === currentAuthor ? "is-author" : "";
+         }
+
+         console.log(currentClass)
+
+        res.render('post-show', { post, currentUser, currentClass })
        }).catch((err) => {
          console.log(err.message)
        })
    })
+
+   app.delete('/posts/:id', function(req, res) {
+       // is this user logged ?
+       if (!req.user) {
+           // return and respond 401 maybe redirect
+           res.redirect('/login')
+       }
+       // does this user own this post ?
+       Post.findOneAndRemove({ _id: req.params.id, author: req.user }).then((post) => {
+           res.redirect('/')
+       }).catch((err) => {
+           console.log(err.message);
+       })
+
+       // find post by id and remove
+       // Game.findByIdAndRemove(req.params.id, function (err) {
+       //     res.redirect('/')
+       // })
+    });
 
 };

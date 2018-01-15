@@ -1,44 +1,63 @@
+<div class="post-show {{currentClass}}">
 
-<!-- post-show -->
-<div id="post-content">
-    <a href="{{post.url}}" class="lead">{{post.title}}</a>
+  <style>
+    .delete-form {
+            display: none;
+        }
 
-    <div id="post-data">
-        <div id ='map' style="height: 200px; width: 200px;"></div>
-        <p class="post-location">Location: {{post.location}}</p>
-        <p class="post-date">Date: {{post.createdAt}}</p>
-        <p class="post-author">Author: {{post.author.username}}</p>
-    </div>
+    .post-show.is-author .delete-form {
+            display: block;
+        }
+  </style>
+
+
+  <!-- post-show -->
+  <div id="post-content">
+      <a href="{{post.url}}" class="lead">{{post.title}}</a>
+
+      <div id="post-data">
+          <div id ='map' style="height: 200px; width: 200px;"></div>
+          <p class="post-location">Location: {{post.location}}</p>
+          <p class="post-date">Date: {{post.createdAt}}</p>
+          <p class="post-author">Author: {{post.author.username}}</p>
+      </div>
+  </div>
+
+  <form method="POST" action="/posts/{{post._id}}?_method=DELETE">
+    <p class="delete-form"><button type="submit" class="btn btn-danger">Delete</button></p>
+  </form>
+
+
+
+  <form action="/posts/{{post._id}}/comments" method="post">
+      <textarea class='form-control' name="content" placeholder="Comment"></textarea>
+      <div class="text-right" id="save-btn">
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+  </form>
+
+  <h2>Comments</h2>
+  <div id="error">Errorbox</div>
+  {{#each post.answers}}
+      <div class="answer">
+          <div class="answer-scoring">
+              <form class="vote-up" data-id="{{this._id}}">
+                  <div id="vote-up" class="submit-button"></div>
+              </form>
+              <p id="answer-{{this._id}}" class="answer-score">{{this.voteScore}}</p>
+              <form class="vote-down" data-id="{{this._id}}">
+                  <div id="vote-down" class="submit-button"></div>
+              </form>
+          </div>
+          <div class="answer-content">
+              <p class="content-text">{{this.content}}</p>
+              <p class="content-author">{{this.author.username}}</p>
+          </div>
+      </div>
+  {{/each}}
+
+
 </div>
-
-
-
-<form action="/posts/{{post._id}}/comments" method="post">
-    <textarea class='form-control' name="content" placeholder="Comment"></textarea>
-    <div class="text-right">
-      <button type="submit" class="btn btn-primary">Save</button>
-    </div>
-</form>
-
-<h2>Comments</h2>
-<div id="error">Errorbox</div>
-{{#each post.answers}}
-    <div class="answer">
-        <div class="answer-scoring">
-            <form class="vote-up" data-id="{{this._id}}">
-                <div id="vote-up" class="submit-button"></div>
-            </form>
-            <p id="answer-{{this._id}}" class="answer-score">{{this.voteScore}}</p>
-            <form class="vote-down" data-id="{{this._id}}">
-                <div id="vote-down" class="submit-button"></div>
-            </form>
-        </div>
-        <div class="answer-content">
-            <p class="content-text">{{this.content}}</p>
-            <p class="content-author">{{this.author.username}}</p>
-        </div>
-    </div>
-{{/each}}
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX2VYblE-o&callback=initMap"
 async defer></script>
