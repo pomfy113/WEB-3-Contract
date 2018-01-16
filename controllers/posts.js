@@ -14,9 +14,18 @@ module.exports = (app) => {
 
     })
 // Take this out when you're set; debugging
-    app.get('/location', (req, res) => {
+    app.get('/bylocation', (req, res) => {
         let bodytype = utils.checklog("loc", req.user)
         Post.find({'location': req.query.q}).populate('author').then((post) => {
+            res.render('home', {post, bodytype, user: req.user})
+          }).catch((err) => {
+            console.log(err.message)
+          })
+    })
+
+    app.get('/byuser', (req, res) => {
+        let bodytype = utils.checklog("loc", req.user)
+        Post.find({'author': req.query.q}).populate('author').then((post) => {
             res.render('home', {post, bodytype, user: req.user})
           }).catch((err) => {
             console.log(err.message)
@@ -89,5 +98,14 @@ module.exports = (app) => {
        })
 
     });
+
+    app.get('/users', (req, res) => {
+        let bodytype = utils.checklog("login", req.user)
+        User.find().then((userProfile) => {
+            res.render("all-users", {userProfile, bodytype, user: req.user})
+        }).catch((err) => {
+            res.send(err.message)
+        })
+    })
 
 };

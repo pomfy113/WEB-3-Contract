@@ -1,0 +1,13 @@
+<div id="users-nav">
+    <h1 id="home-header">Users page</h1>
+
+    <ul id="home-tabs">
+        <a href="#" class="tab active"><li>Mockup</li></a>
+        <a href="#" class="tab"><li>List</li></a>
+    </ul>
+</div>
+{{#each userProfile}}
+    <div class="userbox">
+        <p><a href="byuser?q={{this.author._id}}">{{this.username}}</a></p>
+    </div>
+{{/each}}

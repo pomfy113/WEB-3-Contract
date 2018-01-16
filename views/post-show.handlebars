@@ -36,7 +36,7 @@
       </div>
   </form>
 
-  <h2>Comments</h2>
+  <h2>Answers</h2>
   <div id="error">Errorbox</div>
   {{#each post.answers}}
       <div class="answer">
@@ -51,7 +51,10 @@
           </div>
           <div class="answer-content">
               <p class="content-text">{{this.content}}</p>
-              <p class="content-author">{{this.author.username}}</p>
+              <div class="content-small">
+                  <p class="content-author">{{this.author.username}}</p>
+                  <p class="content-date">{{this.author.createdAt}}</p>
+              </div>
           </div>
       </div>
   {{/each}}

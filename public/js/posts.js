@@ -1,4 +1,5 @@
 $(document).ready(function() {
+var timerFunc;
 
 $('.submit-button').click(function (e) {
     $(this).parent().submit()
@@ -17,9 +18,7 @@ $('.submit-button').click(function (e) {
           $('#answer-' + response.id).html(response.score);
       },
       error: function(err) {
-          window.setTimeout(hidewindow, 1000)
-          $('#error').css("opacity", 50);
-          $('#error').html(err.responseText);
+          showwindow(err)
       }
     });
   });
@@ -36,17 +35,18 @@ $('.submit-button').click(function (e) {
         $('#answer-' + response.id).html(response.score);
       },
       error: function(err) {
-        $('#error').css("opacity", 50)
-        $('#error').html(err.responseText)
-        setTimeout(hidewindow, 1000);
-
-        // $('#error').delay(5000).css("opacity", 0)
-        // $('#error')
+          showwindow(err);
       }
   })
 
   });
 
+  const showwindow = function(error){
+      $('#error').css("opacity", 50)
+      clearTimeout(timerFunc)
+      $('#error').html(error.responseText)
+      timerFunc = setTimeout(hidewindow, 1000);
+  }
 
   const hidewindow = function(){
       $('#error').css("opacity", 0)
