@@ -13,18 +13,18 @@
 
   <!-- post-show -->
   <div id="post-content">
-      <h2 style="border: 1px solid grey; border-radius: 5px;">{{post.title}}</h3> <br>
-      <h4>{{post.detail}}</h4> <br> <br>
+      <h2 id="post-title">{{post.title}}</h3> <br>
 
-      <h5>Location: {{post.location}}</h5>
+      <div id="post-detail">
+        <p>{{{post.detail}}}</p> <br> <br>
+      </div>
 
-      <div id="post-data">
+      <div id="post-map">
           <input id="address" type="textbox" value='{{post.location}}'>
-          <div id ='map' style="height: 250px; width: 250px;"></div>
+          <div id ='map' style="height: 225px; width: 225px;"></div>
           <p class="post-location">Location: {{post.location}}</p>
           <p class="post-date">Date: {{post.createdAt}}</p>
           <p class="post-author">Author: {{post.author.username}}</p>
-          <input id="view-marker" type="button" value="Click to view Location">
       </div>
   </div>
 
@@ -66,8 +66,6 @@
 
 
 </div>
-<!-- <script src='markerclusterer.js'></script> -->
-<!-- <script src='js-map.js'></script> -->
 <script rel="script" src="/js/posts.js"></script>
 
 <script async defer
@@ -81,9 +79,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX
       });
       var geocoder = new google.maps.Geocoder();
 
-      document.getElementById('view-marker').addEventListener('click', function() {
-        geocodeAddress(geocoder, map);
-      });
+      geocodeAddress(geocoder, map)
     }
 
   function geocodeAddress(geocoder, resultsMap) {
