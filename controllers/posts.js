@@ -112,4 +112,18 @@ module.exports = (app) => {
         })
     })
 
+    app.get('/post-maps', (req,res) => {
+        Post.find({}).select({
+            "title":0,
+            "answers": 0,
+            "author": 0,
+            "createdAt": 0,
+            "updatedAt": 0,
+            "__v": 0
+        }).then((posts) => {
+            res.send(posts)
+        })
+
+    })
+
 };
