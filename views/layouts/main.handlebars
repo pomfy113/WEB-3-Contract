@@ -4,10 +4,11 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="../../style.css"/>
+<link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
 <title>Location Overflow</title>
 </head>
 <body class="{{bodytype}}">
-<div class="stick-navbar">
+  <div class="stick-navbar">
     <ul id="navigation">
         <!--  Nav  -->
             <a id="logo" href="/"><li><h2>&#9783;</h1></li></a>
@@ -26,16 +27,17 @@
             <a href="/login"><li class="logged-out">Log-in</li></a>
             <a href="/register"><li class="logged-out">Register</li></a>
             <div class="sub-button">
-              <a href="/posts/new"><button class="btn btn-primary"> Submit Question </button></a>
+              <a href="/posts/new"><button class="btn btn-primary logged-in"> Submit Question </button></a>
             </div>
     </ul>
 </div>
 
-<br>
-<div class="container">
-    <div class="container-fluid">
-      {{{body}}}
-    </div>
-    <script src="/js/auth.js"></script>
+  <br>
+  <div class="container">
+      <div class="container-fluid">
+        {{{body}}}
+      </div>
+      <script src="/js/auth.js"></script>
+
+  </div>
 </body>
-</div>

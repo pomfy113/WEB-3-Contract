@@ -127,7 +127,7 @@
     transition: all 0.3s ease;
     outline: none;
     border: 1px solid #FE7880;
-    color: #FE7880;
+    color: #000;
 
 }
 #post-data{
@@ -147,6 +147,11 @@
 #map {
   border: 3px solid black;
   padding: 5px;
+}
+
+#view-marker {
+  width: 250px;
+  height: 30px;
 }
 
 #error{
@@ -169,6 +174,10 @@
 }
 .answer .answer-score{
     text-align: center;
+}
+
+#address {
+  display: none;
 }
 
 #vote-down{
