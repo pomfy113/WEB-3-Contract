@@ -58,7 +58,10 @@
     padding: 0px;
 }
 
-
+.sub-button {
+  position: absolute;
+  right: 20px;
+}
 
 
 /* Searches */
@@ -111,6 +114,17 @@
 #post-content{
     position: relative;
     padding-bottom: 250px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 200;
+    background: transparent;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    margin: 20px 0;
+    transition: all 0.3s ease;
+    outline: none;
+    border: 1px solid #FE7880;
+    color: #FE7880;
 
 }
 #post-data{
@@ -121,6 +135,15 @@
 }
 #post-data *{
     margin: 0px;
+}
+
+#save-btn {
+  margin-top: 10px;
+}
+
+#map {
+  border: 3px solid black;
+  padding: 5px;
 }
 
 #error{
