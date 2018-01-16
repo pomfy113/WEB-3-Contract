@@ -44,33 +44,30 @@ module.exports = (app) => {
             if(req.user === null){
                 res.status(401).send("Must be logged in!");
             }
-            else if (answer.downVotes.includes(req.user._id)){
-                answer.downVotes.pull(req.user._id)
-                answer.save()
-                answer.voteScore = answer.voteScore + 1
-                let response = {
-                    "success" : "Updated Successfully",
-                    "status" : 200,
-                    "id": req.params.answerId,
-                    "score": answer.voteScore
-                }
-                res.end(JSON.stringify(response));
-            }
             // If user is inside list of people who already voted, deny
             else if(answer.upVotes.includes(req.user._id)){
                 res.status(401).send("Already voted up");
             }
             // Otherwise, change score
             else{
-                answer.upVotes.push(req.user._id)
+                // If you already downvoted, neutralize it
+                if (answer.downVotes.includes(req.user._id)){
+                    answer.downVotes.pull(req.user._id)
+                }
+                // Else, add to upvotes
+                else{
+                    answer.upVotes.push(req.user._id)
+                }
                 answer.voteScore = answer.voteScore + 1
                 answer.save();
+
                 let response = {
                     "success" : "Updated Successfully",
                     "status" : 200,
                     "id": req.params.answerId,
                     "score": answer.voteScore
                 }
+
                 res.end(JSON.stringify(response));
             }
         })
@@ -81,28 +78,25 @@ module.exports = (app) => {
         // find answer
         Answer.findById(req.params.answerId)
         .then((answer) => {
+            // Must be logged in to alter
             if(req.user === null){
                 res.status(401).send("Must be logged in!");
             }
-
-            else if (answer.upVotes.includes(req.user._id)){
-                answer.upVotes.pull(req.user._id)
-                answer.save()
-                answer.voteScore = answer.voteScore - 1
-                let response = {
-                    "success" : "Updated Successfully",
-                    "status" : 200,
-                    "id": req.params.answerId,
-                    "score": answer.voteScore
-                }
-                res.end(JSON.stringify(response));
-            }
+            // If user is inside list of people who already voted, deny
             else if(answer.downVotes.includes(req.user._id)){
                 res.status(401).send("Already voted down");
             }
-
+            // Otherwise, change score
             else{
-                answer.downVotes.push(req.user._id)
+                // If already upvoted, neutralize
+                if (answer.upVotes.includes(req.user._id)){
+                    answer.upVotes.pull(req.user._id)
+                }
+                // Else, usual
+                else{
+                    answer.downVotes.push(req.user._id)
+                }
+
                 answer.voteScore = answer.voteScore - 1
                 answer.save();
                 let response = {
@@ -111,6 +105,7 @@ module.exports = (app) => {
                     "id": req.params.answerId,
                     "score": answer.voteScore
                 }
+
                 res.end(JSON.stringify(response));
             }
         })

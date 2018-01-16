@@ -5,18 +5,31 @@ const utils = require('./utils')
 
 module.exports = (app) => {
     app.get('/', (req, res) => {
+        res.redirect('/home')
+    })
+
+    app.get('/home', (req, res) => {
         let bodytype = utils.checklog("view-all", req.user)
-        Post.find().then((post) => {
-            res.render('home', {post, bodytype, user: req.user})
+        Post.find().sort(req.query.sort).then((post) => {
+            res.render('home', {active: req.query.sort, post, bodytype, user: req.user})
           }).catch((err) => {
             console.log(err.message)
           })
 
     })
 // Take this out when you're set; debugging
-    app.get('/location', (req, res) => {
+    app.get('/bylocation', (req, res) => {
         let bodytype = utils.checklog("loc", req.user)
         Post.find({'location': req.query.q}).populate('author').then((post) => {
+            res.render('home', {post, bodytype, user: req.user})
+          }).catch((err) => {
+            console.log(err.message)
+          })
+    })
+
+    app.get('/byuser', (req, res) => {
+        let bodytype = utils.checklog("loc", req.user)
+        Post.find({'author': req.query.q}).populate('author').then((post) => {
             res.render('home', {post, bodytype, user: req.user})
           }).catch((err) => {
             console.log(err.message)
@@ -47,8 +60,9 @@ module.exports = (app) => {
   });
 
   app.get('/posts/new', function (req, res) {
-      var currentUser = req.user
-      res.render('post-new', {currentUser: currentUser});
+      let bodytype = utils.checklog("view-all", req.user)
+
+      res.render('post-new', {bodytype, user: req.user});
    })
 
    // Show game details
@@ -68,7 +82,7 @@ module.exports = (app) => {
 
          console.log(currentClass)
 
-        res.render('post-show', { post, currentUser, currentClass })
+        res.render('post-show', { post, bodytype, user: req.user, currentClass })
        }).catch((err) => {
          console.log(err.message)
        })
@@ -87,10 +101,15 @@ module.exports = (app) => {
            console.log(err.message);
        })
 
-       // find post by id and remove
-       // Game.findByIdAndRemove(req.params.id, function (err) {
-       //     res.redirect('/')
-       // })
     });
+
+    app.get('/users', (req, res) => {
+        let bodytype = utils.checklog("login", req.user)
+        User.find().then((userProfile) => {
+            res.render("all-users", {userProfile, bodytype, user: req.user})
+        }).catch((err) => {
+            res.send(err.message)
+        })
+    })
 
 };
