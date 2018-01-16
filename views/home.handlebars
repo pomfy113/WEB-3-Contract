@@ -33,7 +33,7 @@
             padding: 3px 1px 0px 1px;
         }
 
-        .active{
+        .date-tab.-createdAt{
             padding: 0px;
             border-top: 3px solid green;
             border-left: 1px solid grey;
@@ -41,20 +41,36 @@
             background-color: white;
         }
 
+        .author-tab.author{
+            padding: 0px;
+            border-top: 3px solid green;
+            border-left: 1px solid grey;
+            border-right: 1px solid grey;
+            background-color: white;
+        }
+
+        .home-date{
+            font-size: 8px;
+        }
+
+
+
 
 </style>
 <div id="home-nav">
-    <h1 id="home-header">Mockup Header</h1>
+    <h1 id="home-header">Questions</h1>
 
     <ul id="home-tabs">
-        <a href="#" class="tab active"><li>Mockup</li></a>
-        <a href="#" class="tab"><li>List</li></a>
+        <a href="/home?sort=-createdAt" class="tab date-tab {{active}}"><li>By date</li></a>
+        <a href="/home?sort=author" class="tab author-tab {{active}}"><li>By author</li></a>
     </ul>
 </div>
+
 {{#each post}}
 <div class="in-a-box">
     <a href="/posts/{{this.id}}"><h2>{{this.title}}</h2></a>
     <p><a href="bylocation?q={{this.location}}">Location: {{this.location}}</a></p>
     <p><a href="byuser?q={{this.author._id}}">Author: {{this.author.username}}</a></p>
+    <p class="home-date">Date: {{this.createdAt}}</p>
 </div>
 {{/each}}

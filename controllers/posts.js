@@ -5,9 +5,13 @@ const utils = require('./utils')
 
 module.exports = (app) => {
     app.get('/', (req, res) => {
+        res.redirect('/home')
+    })
+
+    app.get('/home', (req, res) => {
         let bodytype = utils.checklog("view-all", req.user)
-        Post.find().then((post) => {
-            res.render('home', {post, bodytype, user: req.user})
+        Post.find().sort(req.query.sort).then((post) => {
+            res.render('home', {active: req.query.sort, post, bodytype, user: req.user})
           }).catch((err) => {
             console.log(err.message)
           })
