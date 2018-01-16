@@ -2,7 +2,7 @@ $(document).ready(function() {
 
 $('.submit-button').click(function (e) {
     $(this).parent().submit()
-    $("#error").offset({left:e.pageX,top:e.pageY});
+    $("#error").offset({left:e.pageX+20,top:e.pageY});
 })
 
   $('.vote-up').submit(function (e) {
@@ -36,16 +36,20 @@ $('.submit-button').click(function (e) {
         $('#answer-' + response.id).html(response.score);
       },
       error: function(err) {
-        window.setTimeout(hidewindow, 1000)
-        $('#error').css("opacity", 50);
-        $('#error').html(err.responseText);
+        $('#error').css("opacity", 50)
+        $('#error').html(err.responseText)
+        setTimeout(hidewindow, 1000);
+
+        // $('#error').delay(5000).css("opacity", 0)
+        // $('#error')
       }
   })
 
   });
 
+
   const hidewindow = function(){
-    $('#error').animate({"opacity":0}, 500)
+      $('#error').css("opacity", 0)
     }
 
 });

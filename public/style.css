@@ -30,6 +30,8 @@
     border-bottom: 1px solid #BBB;
     box-shadow: 0px 1px 3px #BBB;
     width: 100%;
+    z-index: 10;
+    background-color: white;
 }
 
 
@@ -171,18 +173,27 @@
     margin-top: 5px;
     height: 20px;
     width: 20px;
-    border-top: 20px solid black;
+    border-top: 20px solid lightgray;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
+}
+
+body.logged #vote-down{
+    border-top: 20px solid black;
 }
 
 #vote-up{
     margin-bottom: 5px;
     height: 20px;
     width: 20px;
-    border-bottom: 20px solid black;
+    border-bottom: 20px solid lightgray;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
+
+}
+
+body.logged #vote-up{
+    border-bottom: 20px solid black;
 
 }
 

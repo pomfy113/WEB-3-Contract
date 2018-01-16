@@ -47,8 +47,9 @@ module.exports = (app) => {
   });
 
   app.get('/posts/new', function (req, res) {
-      var currentUser = req.user
-      res.render('post-new', {currentUser: currentUser});
+      let bodytype = utils.checklog("view-all", req.user)
+
+      res.render('post-new', {bodytype, user: req.user});
    })
 
    // Show game details
@@ -68,7 +69,7 @@ module.exports = (app) => {
 
          console.log(currentClass)
 
-        res.render('post-show', { post, currentUser, currentClass })
+        res.render('post-show', { post, bodytype, user: req.user, currentClass })
        }).catch((err) => {
          console.log(err.message)
        })
@@ -87,10 +88,6 @@ module.exports = (app) => {
            console.log(err.message);
        })
 
-       // find post by id and remove
-       // Game.findByIdAndRemove(req.params.id, function (err) {
-       //     res.redirect('/')
-       // })
     });
 
 };
