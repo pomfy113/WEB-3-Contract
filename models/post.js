@@ -10,7 +10,8 @@ const PostSchema = new Schema({
   // longitude: { type: DataTypes.FLOAT },
   // latitude: { type: DataTypes.FLOAT },
   answers:        [{ type: Schema.Types.ObjectId, ref: 'Answer' }],
-  author :        { type: Schema.Types.ObjectId, ref: 'User', required: true }
+  author :        { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  detail :        { type: String, required: false }
 })
 
 // Autopopulation

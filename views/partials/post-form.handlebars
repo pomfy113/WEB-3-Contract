@@ -4,14 +4,21 @@
 
 <div class="form-group">
   <label for="title">Question</label><br>
-  <input class="form-control" type="text" name="title" value="{{post.title}}"/>
+  <input class="form-control" type="text" name="title" value="{{post.title}}" placeholder="Enter Question"/>
+</div>
+
+<!-- Description -->
+
+<div class="form-group">
+  <label for="details">Details</label><br>
+  <textarea class="form-control" name="detail" rows="5" />{{post.detail}}</textarea>
 </div>
 
 <!-- Location -->
 
 <div class="form-group">
   <label for="location">Location</label><br>
-  <input class="form-control" type="text" name="location" value="{{post.location}}"/>
+  <input id="autocomplete" onFocus="geolocate()" class="form-control" type="text" name="location" value="{{post.location}}" placeholder="Enter the Location"/>
 </div>
 
 <!-- BUTTON -->

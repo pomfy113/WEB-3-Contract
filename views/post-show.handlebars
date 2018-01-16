@@ -13,13 +13,18 @@
 
   <!-- post-show -->
   <div id="post-content">
-      <a href="{{post.url}}" class="lead">{{post.title}}</a>
+      <h2 style="border: 1px solid grey; border-radius: 5px;">{{post.title}}</h3> <br>
+      <h4>{{post.detail}}</h4> <br> <br>
+
+      <h5>Location: {{post.location}}</h5>
 
       <div id="post-data">
-          <div id ='map' style="height: 200px; width: 200px;"></div>
+          <input id="address" type="textbox" value='{{post.location}}'>
+          <div id ='map' style="height: 250px; width: 250px;"></div>
           <p class="post-location">Location: {{post.location}}</p>
           <p class="post-date">Date: {{post.createdAt}}</p>
           <p class="post-author">Author: {{post.author.username}}</p>
+          <input id="view-marker" type="button" value="Click to view Location">
       </div>
   </div>
 
@@ -61,18 +66,38 @@
 
 
 </div>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX2VYblE-o&callback=initMap"
-async defer></script>
-    <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
-        });
-      }
-    </script>
 <!-- <script src='markerclusterer.js'></script> -->
 <!-- <script src='js-map.js'></script> -->
 <script rel="script" src="/js/posts.js"></script>
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX2VYblE-o&callback=initMap">
+</script>
+<script type="text/javascript">
+  function initMap() {
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 8,
+        center: {lat: 37.773972, lng: -122.431297}
+      });
+      var geocoder = new google.maps.Geocoder();
+
+      document.getElementById('view-marker').addEventListener('click', function() {
+        geocodeAddress(geocoder, map);
+      });
+    }
+
+  function geocodeAddress(geocoder, resultsMap) {
+      var address = document.getElementById('address').value;
+      geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+          resultsMap.setCenter(results[0].geometry.location);
+          var marker = new google.maps.Marker({
+            map: resultsMap,
+            position: results[0].geometry.location
+          });
+        } else {
+          alert('Geocode was not successful for the following reason: ' + status);
+        }
+      });
+    }
+</script>
