@@ -74,7 +74,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX
 <script type="text/javascript">
   function initMap() {
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 8,
+        zoom: 10,
         center: {lat: 37.773972, lng: -122.431297}
       });
       var geocoder = new google.maps.Geocoder();
@@ -85,7 +85,6 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX
 
       $.get( "/post-maps", function( data ) {
           for (let row in data ){
-              console.log(row)
               geocoder.geocode({'address': data[row].location}, (results, status) =>{
                   if (status === 'OK'){
                       let marker = new google.maps.Marker({
