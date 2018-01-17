@@ -81,21 +81,50 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX
 
       geocodeAddress(geocoder, map)
 
+      let infowindow = new google.maps.InfoWindow()
+
       $.get( "/post-maps", function( data ) {
           for (let row in data ){
-              console.log(data[row].location)
+              console.log(row)
               geocoder.geocode({'address': data[row].location}, (results, status) =>{
                   if (status === 'OK'){
-                      var marker = new google.maps.Marker({
+                      let marker = new google.maps.Marker({
                         map: map,
-                        position: results[0].geometry.location
+                        position: results[0].geometry.location,
+                        id: data[row]._id,
+                        title: data[row].title,
+                        detail: data[row].detail
+
                       });
+                      marker.addListener('click', function() {
+                          infowindow.close()
+                          infowindow.setContent(
+                              '<h1 style="font-size: 12pt;">'+
+                                $(this).attr('title') + '</h1>'+
+                              "<p>"+$(this).attr('detail')+"</p>")
+                          infowindow.open(map, marker)
+                        //   window.location.replace("/posts/"+$(this).attr("id"))
+                      });
+
+
                   } else{
-                      console.log("Something happened" + status)
+                      console.log("Something happened " + status)
                   }
               })
           }
         });
+
+        // content =
+        // '<h1>'+ data[row].title +'</h1>'+
+        // '<p>'+ data[row].detail +'</p>'
+        //
+        //
+        // marker.addListener('click', function() {
+        //       infowindow.setContent(content)
+        //       infowindow.open(map, marker);
+        //   });
+
+
     }
 
   function geocodeAddress(geocoder, resultsMap) {
