@@ -122,4 +122,8 @@ module.exports = (app) => {
 
     })
 
+    app.get('/full-map', (req,res) => {
+        res.render('all-marker')
+    })
+
 };

@@ -2,12 +2,12 @@
 
   <style>
     .delete-form {
-            display: none;
-        }
+        display: none;
+    }
 
     .post-show.is-author .delete-form {
-            display: block;
-        }
+        display: block;
+    }
   </style>
 
 
@@ -86,7 +86,7 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX
       geocodeAddress(geocoder, map, infowindow)
 
 
-      $.get( "/post-maps", function( data ) {
+      $.get("/post-maps", function( data ) {
           for (let row in data ){
               geocoder.geocode({'address': data[row].location}, (results, status) =>{
                   if (status === 'OK'){

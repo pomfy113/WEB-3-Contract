@@ -118,6 +118,10 @@
     opacity: 100;
 }
 
+#map-button {
+    margin: 10px;
+}
+
 /* Posts */
 #post-content{
     position: relative;

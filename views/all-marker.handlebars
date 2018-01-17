@@ -1,0 +1,63 @@
+<style media="screen">
+    #full-map {
+        width:100%;
+        height:100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        border: 10px solid black;
+    }
+</style>
+
+<div class="map-id">
+    <div id="full-map"></div>
+</div>
+
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX2VYblE-o&callback=initMap">
+</script>
+
+<script type="text/javascript">
+  function initMap() {
+      var map = new google.maps.Map(document.getElementById('full-map'), {
+        zoom: 2,
+        center: {lat: 37.773972, lng: -122.431297}
+      });
+      var geocoder = new google.maps.Geocoder();
+      let infowindow = new google.maps.InfoWindow()
+
+      // geocodeAddress(geocoder, map, infowindow)
+
+      $.get("/post-maps", function( data ) {
+          console.log(data)
+          for (let row in data ){
+              geocoder.geocode({'address': data[row].location}, (results, status) =>{
+                  if (status === 'OK'){
+                      let marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                        id: data[row]._id,
+                        title: data[row].title,
+                        detail: data[row].detail
+                      });
+                      marker.addListener('click', function() {
+                          infowindow.close()
+                          infowindow.setContent(
+                            '<a style="text-decoration: none;" href=/posts/'+$(this).attr("id")+'>'+
+                                '<h1 style="font-size: 12pt;">'+$(this).attr('title') + '</h1>'+
+                            '</a>')
+                          infowindow.open(map, marker)
+                        //   window.location.replace("/posts/"+$(this).attr("id"))
+                      });
+
+                  } else{
+                      console.log("Something happened " + status)
+                  }
+              })
+          }
+        });
+    }
+</script>
