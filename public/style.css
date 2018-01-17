@@ -35,12 +35,12 @@
 }
 
 
-.stick-navbar *{
-    margin: 0px 5px;
+.stick-navbar ul form{
+    padding: 5px;
 }
 
 .stick-navbar ul{
-    margin: 5px;
+    margin: 0px 5px;
     display: inline-flex;
     flex-direction: row;
     list-style: none;
@@ -53,18 +53,24 @@
 .stick-navbar ul a{
     text-decoration: none;
     color: black;
-    padding: 5px;
+    padding: 10px 10px 5px 10px;
+    margin: 0px 10px;
 }
 
+
 #logo{
-    padding: 0px;
+    padding: 0px 10px;
 }
 
 .sub-button {
   position: absolute;
   right: 20px;
+  padding: 5px;
 }
 
+.stick-navbar .sub-button a:hover{
+    background-color: white;
+}
 
 /* Searches */
 
@@ -204,10 +210,20 @@
     border-top: 20px solid lightgray;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
+
 }
 
 body.logged #vote-down{
     border-top: 20px solid black;
+    cursor: pointer;
+}
+
+body.logged #vote-down:hover{
+    transform: scale(1.2);
+}
+
+body.logged #vote-down:active{
+    transform: scale(0.8);
 }
 
 #vote-up{
@@ -222,8 +238,18 @@ body.logged #vote-down{
 
 body.logged #vote-up{
     border-bottom: 20px solid black;
-
+    cursor: pointer;
 }
+
+body.logged #vote-up:hover{
+    transform: scale(1.2);
+}
+
+body.logged #vote-up:active{
+    transform: scale(0.8);
+}
+
+
 
 .answer .answer-content{
     margin-left: 10%;

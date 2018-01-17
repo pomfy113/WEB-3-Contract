@@ -2,16 +2,16 @@ const Post = require('../models/post')
 const Answer = require('../models/answer')
 
 module.exports = (app) => {
-    app.post('/posts/:postId/comments', function (req, res) {
+    app.post('/posts/:postId/answer', function (req, res) {
         // If not logged in, do this
         if (req.user == null) {
             res.redirect('/login');
             return
         }
-        // New comment for answer
+        // New answer
         let answer = new Answer(req.body);
         answer.author = req.user
-        // Find the original answer to put new comment on
+        // Find the original post to put new comment on
         Post.findById(req.params.postId)
         .then((post) => {
             post.answers.unshift(answer)
@@ -26,14 +26,30 @@ module.exports = (app) => {
         })
     })
 
-    // New comments
-    app.get('/comments/:commentid/new', (req, res) => {
-        // Get the original comment for viewing as well
-        Comment.findById(req.params.commentid)
+    // New answer
+    app.get('/answers/:answerid/', (req, res) => {
+        // Get the original answer for viewing as well
+        Answer.findById(req.params.commentid)
         .then((comment) => {
             res.render('comment-new', {comment});
         })
     })
+
+    // Delete answer
+    app.delete('/posts/:postId/:answerId', function(req, res) {
+        // is this user logged ?
+        if (!req.user) {
+            // return and respond 401 maybe redirect
+            res.redirect('/login')
+        }
+        // Does this user own this post?
+        Answer.findOneAndRemove({ _id: req.params.answerId, author: req.user }).then((post) => {
+            res.redirect('/posts/'+req.params.postId)
+        }).catch((err) => {
+            console.log(err.message);
+        })
+
+     });
 
     // Voting up; uses AJAX/jquery to get here
     app.put('/comments/:answerId/vote-up', (req, res) => {
