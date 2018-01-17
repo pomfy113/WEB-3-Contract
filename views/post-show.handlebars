@@ -21,7 +21,7 @@
 
       <div id="post-map">
           <input id="address" type="textbox" value='{{post.location}}'>
-          <div id ='map' style="height: 225px; width: 225px;"></div>
+          <div id ='map' style="height: 250px; width: 250px;"></div>
           <p class="post-location">Location: {{post.location}}</p>
           <p class="post-date">Date: {{post.createdAt}}</p>
           <p class="post-author">Author: {{post.author.username}}</p>
@@ -74,15 +74,59 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX
 <script type="text/javascript">
   function initMap() {
       var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 8,
+        zoom: 10,
         center: {lat: 37.773972, lng: -122.431297}
       });
       var geocoder = new google.maps.Geocoder();
+      let infowindow = new google.maps.InfoWindow()
 
-      geocodeAddress(geocoder, map)
+      geocodeAddress(geocoder, map, infowindow)
+
+
+      $.get( "/post-maps", function( data ) {
+          for (let row in data ){
+              geocoder.geocode({'address': data[row].location}, (results, status) =>{
+                  if (status === 'OK'){
+                      let marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location,
+                        id: data[row]._id,
+                        title: data[row].title,
+                        detail: data[row].detail
+
+                      });
+                      marker.addListener('click', function() {
+                          infowindow.close()
+                          infowindow.setContent(
+                            '<a style="text-decoration: none;" href=/posts/'+$(this).attr("id")+'>'+
+                                '<h1 style="font-size: 12pt;">'+$(this).attr('title') + '</h1>'+
+                            '</a>')
+                          infowindow.open(map, marker)
+                        //   window.location.replace("/posts/"+$(this).attr("id"))
+                      });
+
+
+                  } else{
+                      console.log("Something happened " + status)
+                  }
+              })
+          }
+        });
+
+        // content =
+        // '<h1>'+ data[row].title +'</h1>'+
+        // '<p>'+ data[row].detail +'</p>'
+        //
+        //
+        // marker.addListener('click', function() {
+        //       infowindow.setContent(content)
+        //       infowindow.open(map, marker);
+        //   });
+
+
     }
 
-  function geocodeAddress(geocoder, resultsMap) {
+  function geocodeAddress(geocoder, resultsMap, infowindow) {
       var address = document.getElementById('address').value;
       geocoder.geocode({'address': address}, function(results, status) {
         if (status === 'OK') {
@@ -90,6 +134,12 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX
           var marker = new google.maps.Marker({
             map: resultsMap,
             position: results[0].geometry.location
+          });
+          marker.addListener('click', function() {
+              infowindow.close()
+              infowindow.setContent('<h1 style="font-size: 12pt;">Current question!</h1>')
+              infowindow.open(map, marker)
+            //   window.location.replace("/posts/"+$(this).attr("id"))
           });
         } else {
           alert('Geocode was not successful for the following reason: ' + status);

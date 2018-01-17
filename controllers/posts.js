@@ -79,9 +79,6 @@ module.exports = (app) => {
              var currentAuthor = post.author.username;
              currentClass = currentUser.username === currentAuthor ? "is-author" : "";
          }
-
-         console.log(currentClass)
-
         res.render('post-show', { post, bodytype, user: req.user, currentClass })
        }).catch((err) => {
          console.log(err.message)
@@ -110,6 +107,19 @@ module.exports = (app) => {
         }).catch((err) => {
             res.send(err.message)
         })
+    })
+
+    app.get('/post-maps', (req,res) => {
+        Post.find({}).select({
+            "answers": 0,
+            "author": 0,
+            "createdAt": 0,
+            "updatedAt": 0,
+            "__v": 0
+        }).then((posts) => {
+            res.send(posts)
+        })
+
     })
 
 };
