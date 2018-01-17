@@ -80,6 +80,22 @@ src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA098tlCp-gUAnSgWAst8CXHWX
       var geocoder = new google.maps.Geocoder();
 
       geocodeAddress(geocoder, map)
+
+      $.get( "/post-maps", function( data ) {
+          for (let row in data ){
+              console.log(data[row].location)
+              geocoder.geocode({'address': data[row].location}, (results, status) =>{
+                  if (status === 'OK'){
+                      var marker = new google.maps.Marker({
+                        map: map,
+                        position: results[0].geometry.location
+                      });
+                  } else{
+                      console.log("Something happened" + status)
+                  }
+              })
+          }
+        });
     }
 
   function geocodeAddress(geocoder, resultsMap) {
